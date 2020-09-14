@@ -1,9 +1,10 @@
 package edu.jsu.mcis;
 
-public class TicTacToeController {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-    private final TicTacToeModel model;
-    private final TicTacToeView view;
+public class TicTacToeController implements ActionListener {
     
     /* CONSTRUCTOR */
 
@@ -12,34 +13,53 @@ public class TicTacToeController {
         /* Initialize model, view, and width */
 
         model = new TicTacToeModel(width);
-        view = new TicTacToeView();
+        view = new TicTacToeView(this,width);
         
     }
 
-    public void start() {
-    
-        /* MAIN LOOP (repeats until game is over) */
+        public void start() {
+    public String getMarkAsString(int row, int col) {        
 
-        /* Display the board using the View's "showBoard()", then use
-           "getNextMove()" to get the next move from the player.  Enter
-           the move (using the Model's "makeMark()", or display an error
-           using the View's "showInputError()" if the move is invalid. */
+        return (model.getMark(row, col).toString());
+
+    }
+    
+     
+    public TicTacToeView getView() {        
+
+        return view;  
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        JButton button = (JButton)(e.getSource());
+        int row = (int) (button.getName().charAt(6)) - 48;
+        int col = (int) (button.getName().charAt(7)) - 48;
+
+
     	
-        while(model.isGameover()==false) {
-        	view.showBoard(model.toString());
-        	TicTacToeMove nextMove = view.getNextMove(model.isXTurn());
-        	if(model.makeMark(nextMove.getRow(),nextMove.getCol())==false) {
-            	view.showInputError();
-            }
+        if (!model.isGameover()) {
+
+            model.makeMark(row,col);
+            button.setText(model.getMark(row,col).toString());
+
+        if (model.getResult().toString() == "X" || model.getResult().toString() == "O") {
+
+            view.showResult(model.getResult().toString().toUpperCase());
         	
         }
         
-        
-        /* After the game is over, show the final board and the winner */
+        }
 
-        view.showBoard(model.toString());
+         if (model.getResult().toString() == "TIE") {
 
-        view.showResult(model.getResult().toString());
+       view.showResult(model.getResult().toString().toUpperCase());
+
+            }
+
+        }
 
 /* Logan Grant */
         
