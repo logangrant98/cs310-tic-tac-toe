@@ -1,10 +1,11 @@
 package edu.jsu.mcis;
-
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class TicTacToeController implements ActionListener {
+
+    private final TicTacToeModel model;
+    private final TicTacToeView view;
     
     /* CONSTRUCTOR */
 
@@ -13,56 +14,36 @@ public class TicTacToeController implements ActionListener {
         /* Initialize model, view, and width */
 
         model = new TicTacToeModel(width);
-        view = new TicTacToeView(this,width);
+        view = new TicTacToeView(this, width);
         
     }
 
-        public void start() {
-    public String getMarkAsString(int row, int col) {        
-
+    public String getMarkAsString(int row, int col) {
         return (model.getMark(row, col).toString());
-
     }
-    
-     
-    public TicTacToeView getView() {        
 
-        return view;  
-
+    public TicTacToeView getView() {
+        return view;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent event)
+    {
+        String evt = event.toString();
+        evt = evt.substring(evt.length()-2);
 
-        JButton button = (JButton)(e.getSource());
-        int row = (int) (button.getName().charAt(6)) - 48;
-        int col = (int) (button.getName().charAt(7)) - 48;
+        int num = Integer.parseInt(evt);
+        int first = num/10;
+        int second = num%10;
 
+        model.makeMark(first, second);
+        view.updateSquares();
 
-    	
-        if (!model.isGameover()) {
-
-            model.makeMark(row,col);
-            button.setText(model.getMark(row,col).toString());
-
-        if (model.getResult().toString() == "X" || model.getResult().toString() == "O") {
-
-            view.showResult(model.getResult().toString().toUpperCase());
-        	
-        }
-        
-        }
-
-         if (model.getResult().toString() == "TIE") {
-
-       view.showResult(model.getResult().toString().toUpperCase());
-
-            }
+        if(!model.getResult().equals(TicTacToeModel.Result.NONE)){
+        view.showResult(model.getResult().toString());
+        view.disableSquares();
 
         }
-
-/* Logan Grant */
-        
     }
 
 }

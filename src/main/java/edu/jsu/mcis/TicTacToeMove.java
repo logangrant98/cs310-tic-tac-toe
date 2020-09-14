@@ -1,5 +1,5 @@
-
 package edu.jsu.mcis;
+
 public class TicTacToeMove {
     
     private final int row;
@@ -16,9 +16,6 @@ public class TicTacToeMove {
 
     public int getCol() {
         return col;
-
-
-/* Logan Grant */
     }
     
 }
