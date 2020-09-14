@@ -16,6 +16,9 @@ public class TicTacToeMove {
 
     public int getCol() {
         return col;
+
+
+/* Logan Grant */
     }
     
 }

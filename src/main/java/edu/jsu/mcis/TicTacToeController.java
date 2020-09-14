@@ -40,6 +40,8 @@ public class TicTacToeController {
         view.showBoard(model.toString());
 
         view.showResult(model.getResult().toString());
+
+/* Logan Grant */
         
     }
 
